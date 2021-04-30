@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    container_name: know_your_campus 
+    environment:
+      POSTGRES_DB: know_your_campus
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+    volumes: 
+      - kyc_vol:/var/lib/postgresql/data
+    ports: 
+      - 5432:5432
+      
+volumes: 
+  kyc_vol:
+    name: kyc_vol 
+    
