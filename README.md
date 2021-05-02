@@ -35,6 +35,12 @@ The main aim of this project is to make platform where students can freely share
 
 [x] Authentication <br />
 [ ] Create schema and mutations for reviews <br />
+	[x] Get All Reviews Query
+	[x] Get queries by tags
+	[x] Get query by id
+	[x] Get query by user and tags
+	[ ] Mutation - Create, Update, Delete
+	[ ] Custom Object type for fields	
 [ ] Create Schema and mutations for comments <br />
 [ ] Override Email Templates <br />
 [ ] Setup email server
@@ -44,8 +50,11 @@ The main aim of this project is to make platform where students can freely share
 * Authentication
 
     [x] Create Account Component <br />
-    [ ] Login Component <br />
-    [ ] Reset Password <br />
+    [x] Login Component <br />
+    [x] Logout Component <br />
+	[x] Verify Account Component <br />
+	[x] ReSend Verification Mail <br />
+	[x] Reset Password <br />
     [ ] Change Password <br />
     [ ] Edit Profile
 
