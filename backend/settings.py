@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'graphene_django',
     'graphql_auth',
     'corsheaders',    
+    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
+    
     # created apps
     'users',
     'reviews',
@@ -165,6 +167,10 @@ GRAPHQL_JWT = {
         "graphql_auth.mutations.RefreshToken",
         "graphql_auth.mutations.RevokeToken",
     ],
+}
+
+GRAPHQL_AUTH = {
+    'ALLOW_LOGIN_NOT_VERIFIED': False
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

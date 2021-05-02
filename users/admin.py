@@ -3,6 +3,7 @@ from users.models import CustomUser
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext_lazy as _
+from graphql_auth.models import UserStatus
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -28,3 +29,4 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(UserStatus)
