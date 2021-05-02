@@ -56,8 +56,16 @@ export default function CreateAccount() {
     });
   };
 
-  if(error) return <p>Something went wrong try again later. </p>
+  if (error) return <p>Something went wrong try again later. </p>;
   if (loading) return <p>Loading ....</p>;
+  if (data && data.register && data.register.success)
+    return (
+      <p>
+        Verification mail has been to the your email. Please verify to access
+        this site
+      </p>
+    );
+    
   return (
     <form onSubmit={handleSubmit}>
       {errors &&
