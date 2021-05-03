@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # installed apps
     'graphene_django',
@@ -50,6 +51,8 @@ INSTALLED_APPS = [
     'comments'
 ]
 
+SITE_ID = 1
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -60,17 +63,18 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
+
 CORS_ORIGIN_WHITELIST = [
-        'http://localhost:3000',
-        'http://127.0.0.1:3000'
-    ]
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+]
 CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -170,7 +174,20 @@ GRAPHQL_JWT = {
 }
 
 GRAPHQL_AUTH = {
-    'ALLOW_LOGIN_NOT_VERIFIED': False
+    'ALLOW_LOGIN_NOT_VERIFIED': False,
+    "EMAIL_TEMPLATE_VARIABLES": {
+        "site_name": "Know Your Campus",
+        "frontend_domain": "localhost:3000",
+    },
+    'ACTIVATION_PATH_ON_EMAIL': 'activate', # path on frontend to handle activation
+    'PASSWORD_RESET_PATH_ON_EMAIL': 'password-reset' # path on frontend to reset password
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'email_name'
+# EMAIL_HOST_PASSWORD = 'password'
