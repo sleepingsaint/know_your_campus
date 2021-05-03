@@ -34,14 +34,20 @@ The main aim of this project is to make platform where students can freely share
 ### Backend
 
 [x] Authentication <br />
-[ ] Create schema and mutations for reviews <br />
+[x] Create schema and mutations for reviews <br />
 	[x] Get All Reviews Query
 	[x] Get queries by tags
 	[x] Get query by id
 	[x] Get query by user and tags
-	[ ] Mutation - Create, Update, Delete
-	[ ] Custom Object type for fields	
-[ ] Create Schema and mutations for comments <br />
+	[x] Mutation - Create, Update, Delete
+	[x] Custom Object type for fields
+	[x] App Upvote, Downvote, Remove vote mutations
+	[ ] Add Pagination for Reviews
+[x] Create Schema and mutations for comments <br />
+	[x] Get All Comments for a review Query
+	[x] Get Comments by an user
+	[x] Mutation - Create, Update, Delete
+	[ ] Add Pagination for Comments
 [ ] Override Email Templates <br />
 [ ] Setup email server
 
