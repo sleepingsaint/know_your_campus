@@ -15,15 +15,19 @@ class CommentType(DjangoObjectType):
         fields = '__all__'
     user = graphene.Field(AuthorType)
 
-class CommentQuery(graphene.ObjectType):
-    review_comments = graphene.List(CommentType, review_id=graphene.ID(required=True))
-    comments_by_user = graphene.List(CommentType, user_id=graphene.ID(required=True))
+class CommentConnection(graphene.relay.Connection):
+    class Meta:
+        node = CommentType
 
-    def resolve_review_comments(root, info, review_id):
+class CommentQuery(graphene.ObjectType):
+    review_comments = graphene.relay.ConnectionField(CommentConnection, review_id=graphene.ID(required=True))
+    comments_by_user = graphene.relay.ConnectionField(CommentConnection, user_id=graphene.ID(required=True))
+
+    def resolve_review_comments(root, info, review_id, **kwargs):
         PermissionCheck(info.context.user)
         return Comment.objects.filter(object_id=review_id)
 
-    def resolve_comments_by_user(root, info, user_id):
+    def resolve_comments_by_user(root, info, user_id, **kwargs):
         PermissionCheck(info.context.user)
         return Comment.objects.filter(user__id=user_id)
 

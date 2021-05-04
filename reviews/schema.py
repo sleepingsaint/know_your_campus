@@ -13,8 +13,13 @@ class ReviewType(DjangoObjectType):
     class Meta:
         model = Review
         fields = '__all__'
+        interface = (graphene.relay.node, )
 
     user = graphene.Field(AuthorType)
+
+class ReviewConnection(graphene.relay.Connection):
+    class Meta:
+        node = ReviewType
 
 def PermissionCheck(user):
     if not user.is_authenticated:
@@ -25,20 +30,18 @@ def PermissionCheck(user):
         raise Exception("Your account have been deactivated")
 
 class ReviewQuery(graphene.ObjectType):
-    reviews = graphene.List(ReviewType)
-    reviews_by_tags = graphene.Field(graphene.List(ReviewType), tags=graphene.List(graphene.String))
+    reviews = graphene.relay.ConnectionField(ReviewConnection)
+    reviews_by_tags = graphene.relay.ConnectionField(ReviewConnection, tags=graphene.List(graphene.String))
+    reviews_by_user = graphene.relay.ConnectionField(ReviewConnection, id=graphene.ID(required=True), tags=graphene.List(graphene.String))
     review = graphene.Field(ReviewType, id=graphene.String())
-    reviews_by_user = graphene.Field(graphene.List(ReviewType), id=graphene.String(required=True), tags=graphene.List(graphene.String))
 
-    def resolve_reviews(root, info, **kwargs):
+    def resolve_reviews(root, info):
         PermissionCheck(info.context.user)
         return Review.objects.all()
 
-    def resolve_reviews_by_tags(root, info, tags=[]):
+    def resolve_reviews_by_tags(root, info, tags = [], **kwargs):
         PermissionCheck(info.context.user)
-        if tags:
-            return Review.objects.filter(tags__contained_by=tags)
-        return Review.objects.all()
+        return Review.objects.filter(tags__contains=tags)
 
     def resolve_review(root, info, id):
         PermissionCheck(info.context.user)
@@ -50,9 +53,7 @@ class ReviewQuery(graphene.ObjectType):
 
     def resolve_reviews_by_user(root, info, id, tags=[]):
         PermissionCheck(info.context.user)
-        if tags:
-            return Review.objects.filter(user__id=id, tags__contained_by=tags)
-        return Review.objects.filter(user__id=id)
+        return Review.objects.filter(user__id=id, tags__contains=tags)
 
 # Mutations
 class CreateReview(graphene.Mutation):
