@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+from corsheaders.defaults import default_headers
+from datetime import timedelta
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -62,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    # 'backend.middleware.refreshTokenMiddleWare'
 ]
 
 CORS_ORIGIN_WHITELIST = [
@@ -70,6 +74,9 @@ CORS_ORIGIN_WHITELIST = [
 ]
 CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = 'backend.urls'
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'x-refresh-token',
+]
 
 TEMPLATES = [
     {
@@ -160,6 +167,7 @@ AUTHENTICATION_BACKENDS = [
 GRAPHQL_JWT = {
     "JWT_VERIFY_EXPIRATION": True,
     "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
+    # "JWT_EXPIRATION_DELTA": timedelta(seconds=10),
     "JWT_ALLOW_ANY_CLASSES": [
         "graphql_auth.mutations.Register",
         "graphql_auth.mutations.VerifyAccount",
@@ -171,6 +179,7 @@ GRAPHQL_JWT = {
         "graphql_auth.mutations.RefreshToken",
         "graphql_auth.mutations.RevokeToken",
     ],
+    "JWT_AUTH_HEADER_PREFIX": "Bearer"
 }
 
 GRAPHQL_AUTH = {

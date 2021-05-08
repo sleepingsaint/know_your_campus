@@ -45,7 +45,7 @@ class CreateComment(graphene.Mutation):
             c = Comment(comment=comment)
             c.user = info.context.user
             c.content_type = REVIEW_CONTENT_TYPE
-            c.object_id = id
+            c.object_id = review_id
             c.save()
             return cls(comment=c)
         except ObjectDoesNotExist:

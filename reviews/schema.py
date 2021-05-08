@@ -16,7 +16,23 @@ class ReviewType(DjangoObjectType):
         interface = (graphene.relay.node, )
 
     user = graphene.Field(AuthorType)
+    upvotes = graphene.Int()
+    downvotes = graphene.Int()
+    upvoted = graphene.Boolean()
+    downvoted = graphene.Boolean()
 
+    def resolve_upvoted(root, info):
+        return (info.context.user.id in root.upvotes)
+
+    def resolve_downvoted(root, info):
+        return (info.context.user.id in root.downvotes)
+
+    def resolve_upvotes(root, info):
+        return len(root.upvotes)
+    
+    def resolve_downvotes(root, info):
+        return len(root.downvotes)
+    
 class ReviewConnection(graphene.relay.Connection):
     class Meta:
         node = ReviewType
@@ -35,7 +51,7 @@ class ReviewQuery(graphene.ObjectType):
     reviews_by_user = graphene.relay.ConnectionField(ReviewConnection, id=graphene.ID(required=True), tags=graphene.List(graphene.String))
     review = graphene.Field(ReviewType, id=graphene.String())
 
-    def resolve_reviews(root, info):
+    def resolve_reviews(root, info, **kwargs):
         PermissionCheck(info.context.user)
         return Review.objects.all()
 
