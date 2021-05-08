@@ -122,7 +122,8 @@ const client = new ApolloClient({
       Query: {
         fields: {
           reviews: relayStylePagination(),
-          comments: relayStylePagination()
+          comments: relayStylePagination(),
+          reviewComments: relayStylePagination(),
         }
       }
     }

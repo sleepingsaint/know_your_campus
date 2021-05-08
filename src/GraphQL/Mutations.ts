@@ -62,3 +62,22 @@ export const RESET_PASSWORD = gql`
         }
     }
 `
+
+export const CREATE_REVIEW_COMMENT = gql`
+    mutation CREATE_REVIEW_COMMENT($comment: String, $review_id: ID!){
+        createComment(comment:$comment, reviewId: $review_id){
+            comment{
+                id
+                comment
+                user{
+                    id
+                    username
+                    avatar
+                }
+                createdAt
+                updatedAt
+                objectId
+            }
+        }
+    }
+`

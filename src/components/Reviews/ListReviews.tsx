@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import {GET_REVIEWS} from '../../GraphQL/Queries';
+import ReviewComments from '../Comments/ReviewComments';
 
 // interface PageInfo{
 //     startCursor: String;
@@ -54,10 +55,11 @@ export default function Reviews() {
     }
 
   return <div>
-      {data && data.reviews.edges && data.reviews.edges.map((n: ReviewNode, index: number) => <div data-cursor={n.node.cursor} key={index}>
+      {data && data.reviews.edges && data.reviews.edges.map((n: ReviewNode, index: number) => <div data-cursor={n.cursor} key={index}>
           <h4>{n.node.tldr}</h4>
           <p>{n.node.review} - {n.cursor}</p>
           <p><span>Upvotes: {n.node.upvotes}</span> <span>Downvotes: {n.node.downvotes}</span></p>
+        <ReviewComments review_id={n.node.id} />
       </div>)}
       {data && data.reviews.pageInfo && data.reviews.pageInfo.hasNextPage && <button onClick={loadMoreReviews}>Load More Reviews</button>}
   </div>;
