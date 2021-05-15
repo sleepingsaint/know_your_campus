@@ -3,6 +3,7 @@ import { GET_REVIEW_COMMENTS } from "../../GraphQL/Queries";
 import { CREATE_REVIEW_COMMENT } from "../../GraphQL/Mutations";
 
 import { useQuery, useMutation } from "@apollo/client";
+import Comment from "./Comment";
 
 interface ReviewCommentEdge {
 	cursor: string;
@@ -43,7 +44,6 @@ export default function ReviewComments(props: { review_id: number }) {
 	
 	useEffect(() => {
 		if(newCommentData && newCommentData.createComment){
-			console.log(newCommentData);
 			setNewComments([...newComments, newCommentData.createComment.comment]);
 		}
 	}, [newCommentData]);
@@ -64,7 +64,6 @@ export default function ReviewComments(props: { review_id: number }) {
 	};
 
 	const loadMoreComments = (e: React.MouseEvent<HTMLButtonElement>) => {
-		console.log(data.reviewComments.pageInfo.endCursor);
 		fetchMore({
 			variables: {
 				first: 10,
@@ -80,12 +79,7 @@ export default function ReviewComments(props: { review_id: number }) {
 	return (
 		<div>
 			{data &&
-				data.reviewComments.edges.map((n: ReviewCommentEdge, index: number) => (
-					<div key={index}>
-						<p>{n.node.user.username}</p>
-						<p>{n.node.comment} - {n.cursor}</p>
-					</div>
-				))}
+				data.reviewComments.edges.map((n: ReviewCommentEdge, index: number) => <Comment key={index} new={false} comment={n.node} /> )}
 			{data &&
 				data.reviewComments.pageInfo &&
 				data.reviewComments.pageInfo.hasNextPage && (
@@ -93,10 +87,7 @@ export default function ReviewComments(props: { review_id: number }) {
 				)}
 			{newComments && <div>
 					<hr />
-					{newComments.map((c: ReviewComment, index: number) => <div key={index}>
-						<p>{c.user.username}</p>
-						<p>{c.comment}</p>
-					</div>)}
+					{newComments.map((c: ReviewComment, index: number) => <Comment key={index} comment={c} new={true} newComments={newComments} setNewComments={setNewComments} />)}
 				</div>}
 			{newCommentLoading && <p>Adding comment...</p>}
 			{newCommentError && <p>Oops something went wrong try again.</p>}

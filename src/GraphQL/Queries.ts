@@ -46,6 +46,7 @@ export const GET_REVIEW_COMMENTS = gql`
                         username
                         avatar
                     }
+                    objectId
                 }
             }
         }

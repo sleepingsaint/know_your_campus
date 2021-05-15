@@ -81,3 +81,11 @@ export const CREATE_REVIEW_COMMENT = gql`
         }
     }
 `
+
+export const DELETE_REVIEW_COMMENT = gql`
+    mutation DELETE_REVIEW_COMMENT($commentId: ID!){
+        deleteComment(id: $commentId){
+            success
+        }
+    }
+`

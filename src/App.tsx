@@ -123,7 +123,7 @@ const client = new ApolloClient({
         fields: {
           reviews: relayStylePagination(),
           comments: relayStylePagination(),
-          reviewComments: relayStylePagination(),
+          reviewComments: relayStylePagination(["type", "reviewId"]),
         }
       }
     }
