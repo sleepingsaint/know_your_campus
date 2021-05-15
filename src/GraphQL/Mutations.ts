@@ -82,6 +82,25 @@ export const CREATE_REVIEW_COMMENT = gql`
     }
 `
 
+export const UPDATE_REVIEW_COMMENT = gql`
+    mutation UPDATE_REVIEW_COMMENT($comment_id: ID!, $comment: String){
+        updateComment(id: $comment_id, comment: $comment){
+            comment{
+                id
+                comment
+                user{
+                    id
+                    username
+                    avatar
+                }
+                createdAt
+                updatedAt
+                objectId
+            }
+        }
+    }
+`
+
 export const DELETE_REVIEW_COMMENT = gql`
     mutation DELETE_REVIEW_COMMENT($commentId: ID!){
         deleteComment(id: $commentId){
