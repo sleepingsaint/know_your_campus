@@ -42,14 +42,20 @@ The main aim of this project is to make platform where students can freely share
 	[x] Mutation - Create, Update, Delete <br />
 	[x] Custom Object type for fields <br />
 	[x] App Upvote, Downvote, Remove vote mutations <br />
-	[ ] Add Pagination for Reviews <br />
+	[x] Add Pagination for Reviews <br />
+	[x] Implement Relay framework for reviews
+
 [x] Create Schema and mutations for comments <br />
 	[x] Get All Comments for a review Query <br />
 	[x] Get Comments by an user <br />
 	[x] Mutation - Create, Update, Delete <br />
-	[ ] Add Pagination for Comments <br />
-[ ] Override Email Templates <br />
-[ ] Setup email server
+	[x] Add Pagination for Comments <br />
+	[x] Implement Relay Framework for comments <br />
+
+[x] Override Email Templates <br />
+[ ] Setup email server <br />
+[ ] Restructure Code <br />
+	[ ] Seperating Mutation, Queries, Types
 
 ### Frontend
 
@@ -63,7 +69,7 @@ The main aim of this project is to make platform where students can freely share
 	[x] Reset Password <br />
     [ ] Change Password <br />
     [ ] Edit Profile
-
+	[x] Implement Refresh Token <br />
 * Reviews
 
     [ ] Create Review Component <br />
@@ -73,10 +79,10 @@ The main aim of this project is to make platform where students can freely share
 
 * Comments
 
-    [ ] Create Comment Component <br />
-    [ ] List All Comments Component <br />
-    [ ] Edit Comment Component <br />
-    [ ] Delete Comment Component <br />
+    [x] Create Comment Component <br />
+    [x] List All Comments Component <br />
+    [x] Edit Comment Component <br />
+    [x] Delete Comment Component <br />
 
 * Voice Chat
 
